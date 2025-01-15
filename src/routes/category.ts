@@ -6,7 +6,7 @@ import Category from "../models/Category";
 
 const router: Router = express.Router();
 
-// 1. Create a new category
+// Create a new category
 router.post(
   "/",
   [
@@ -42,7 +42,7 @@ router.post(
   },
 );
 
-// 2. Get a list of all categories
+// Get a list of all categories
 router.get("/", async (req: Request, res: Response) => {
   try {
     const categories = await Category.find();
@@ -52,7 +52,7 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// 3. Get details of a specific category
+// Get details of a specific category
 router.get("/:id", async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
 
@@ -68,7 +68,7 @@ router.get("/:id", async (req: Request, res: Response): Promise<any> => {
   }
 });
 
-// 4. Update a category
+// Update a category
 router.put(
   "/:id",
   [
