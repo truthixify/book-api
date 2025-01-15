@@ -11,7 +11,6 @@ import authorRoute from "./routes/author";
 import categoryRoute from "./routes/category";
 import authRoute from "./routes/auth";
 
-
 const app: Application = express();
 
 dotenv.config();
@@ -22,9 +21,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(morgan("dev"));
 
 // Connect to DB
-mongoose.connect(String(process.env.MONGODB_URI))
-    .then(() => console.log("Connected to DB successfully"))
-    .catch(err => console.log("Error connecting to DB: ", err));
+mongoose
+  .connect(String(process.env.MONGODB_URI))
+  .then(() => console.log("Connected to DB successfully"))
+  .catch((err) => console.log("Error connecting to DB: ", err));
 
 // Routes
 app.use("/api/health-check", healthCheckRoute);

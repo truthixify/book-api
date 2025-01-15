@@ -50,11 +50,13 @@ This is a RESTful API built with Express and MongoDB that allows users to manage
 ```bash
    npm start
 ```
+
 The app will run on http://localhost:3000.
 
 ## API Endpoints
 
 ### 1. Health Check Route
+
 **GET /api/health-check**
 
 - Check server health.
@@ -65,38 +67,39 @@ The app will run on http://localhost:3000.
 
 - Create a new user.
 - Body parameters:
-    - username: String (required)
-    - email: String (required)
-    - password: String (required)
+  - username: String (required)
+  - email: String (required)
+  - password: String (required)
 
 **POST /api/login**
 
 - Login an existing user and return a JWT token.
 - Body parameters:
-    - username: String (required)
-    - password: String (required)
+  - username: String (required)
+  - password: String (required)
+
 ### 3. Book Routes
 
 **POST /api/book**
 
 - Create a new book.
 - Body parameters:
-    - title: String (required)
-    - description: String (required)
-    - author: ObjectId (required)
-    - categories: [String] (required)
-    - - publicationYear: Number (required),
-    - isn: String (required)
+  - title: String (required)
+  - description: String (required)
+  - author: ObjectId (required)
+  - categories: [String] (required)
+  - - publicationYear: Number (required),
+  - isn: String (required)
 
 **GET /api/book**
 
 - Get a list of books with optional query parameters for filtering and sorting.
 - Query parameters:
-    - author: String (filter by author)
-    - category: String (filter by category)
-    - sort: String (e.g., title:asc or createdAt:desc)
-    - page: Integer (pagination page)
-    - limit: Integer (pagination limit)
+  - author: String (filter by author)
+  - category: String (filter by category)
+  - sort: String (e.g., title:asc or createdAt:desc)
+  - page: Integer (pagination page)
+  - limit: Integer (pagination limit)
 
 **GET /books/:id**
 
@@ -106,12 +109,12 @@ The app will run on http://localhost:3000.
 
 - Update an existing book by ID.
 - Body parameters:
-    - title: String (optional)
-    - description: String (optional)
-    - author: ObjectId (optional)
-    - categories: [String] (optional)
-    - publicationYear: Number (optional),
-    - isn: String (optional)
+  - title: String (optional)
+  - description: String (optional)
+  - author: ObjectId (optional)
+  - categories: [String] (optional)
+  - publicationYear: Number (optional),
+  - isn: String (optional)
 
 **DELETE /books/:id**
 
@@ -123,8 +126,8 @@ The app will run on http://localhost:3000.
 
 - Update an author by ID.
 - Body parameters:
-    - name: String (required)
-    - biography: String (required)
+  - name: String (required)
+  - biography: String (required)
 
 **GET /api/author**
 
@@ -138,8 +141,8 @@ The app will run on http://localhost:3000.
 
 - Update an author by ID.
 - Body parameters:
-    - name: String (optional)
-    - biography: String (optional)
+  - name: String (optional)
+  - biography: String (optional)
 
 **DELETE /api/author/:id**
 
@@ -151,7 +154,7 @@ The app will run on http://localhost:3000.
 
 - Create a new category.
 - Body parameters:
-    - name: String (required)
+  - name: String (required)
 
 **GET /api/category**
 
@@ -165,7 +168,7 @@ The app will run on http://localhost:3000.
 
 - Update a category by ID.
 - Body parameters:
-    - name: String (optional)
+  - name: String (optional)
 
 **DELETE /api/category/:id**
 
