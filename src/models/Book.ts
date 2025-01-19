@@ -8,6 +8,9 @@ export interface BookInterface extends Document {
   description: string;
   publicationYear: number;
   isbn: string;
+  image: string;
+  url: string;
+  cid: string;
 }
 
 // Define the schema for the Book model
@@ -50,6 +53,33 @@ const bookSchema = new Schema<BookInterface>(
       required: [true, "ISBN is required"],
       unique: true,
       match: [/^\d{10}(\d{3})?$/, "ISBN must be a valid 10 or 13-digit number"],
+    },
+    image: {
+      type: String,
+      required: [true, "Image URL is required"],
+      validate: {
+        validator: function (value) {
+          const imagePattern = /(http|https):\/\/.*\.(jpeg|jpg|png|gif)$/i;
+          return imagePattern.test(value);
+        },
+        message:
+          "Invalid image URL. Must be a valid URL ending with .jpg, .jpeg, .png, or .gif.",
+      },
+    },
+    url: {
+      type: String,
+      required: [true, "Book URL is required"],
+      validate: {
+        validator: function (value) {
+          const urlPattern = /^https?:\/\/[^\s/$.?#].[^\s]*$/;
+          return urlPattern.test(value);
+        },
+        message: "Invalid book URL. Must be a valid HTTP/HTTPS URL.",
+      },
+    },
+    cid: {
+      type: String,
+      required: [true, "CID is required"],
     },
   },
   { timestamps: true },

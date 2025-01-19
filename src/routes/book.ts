@@ -1,13 +1,52 @@
 import express, { Request, Response, Router } from "express";
 import { body, validationResult } from "express-validator";
+import multer from "multer";
+import fs from "fs";
+
 import queryMiddleware from "../middleware/query";
 import authMiddleware from "../middleware/auth";
 
 import Book from "../models/Book";
 import Author from "../models/Author";
 import Category from "../models/Category";
+import { uploadFile } from "../utils/uploadFile";
 
 const router: Router = express.Router();
+const upload = multer({ dest: "src/public/uploads/" });
+
+// Upload book image
+router.post(
+  "/upload-book-image",
+  upload.single("image"),
+  async (req: Request, res: Response): Promise<any> => {
+    if (!req.file?.path) {
+      return res.status(400).send("File path is missing");
+    }
+    const file = await uploadFile(req.file.path);
+
+    // Clean up temporary file
+    fs.unlinkSync(req.file.path);
+
+    res.status(200).send(file);
+  },
+);
+
+// Upload book file
+router.post(
+  "/upload-book",
+  upload.single("book"),
+  async (req: Request, res: Response): Promise<any> => {
+    if (!req.file?.path) {
+      return res.status(400).send("File path is missing");
+    }
+    const file = await uploadFile(req.file.path);
+
+    // Clean up temporary file
+    fs.unlinkSync(req.file.path);
+
+    res.status(200).send(file);
+  },
+);
 
 // Create a new book
 router.post(
@@ -30,14 +69,23 @@ router.post(
     body("isbn").notEmpty().withMessage("ISBN is required."),
   ],
   authMiddleware,
+  upload.array("files", 2),
   async (req: Request, res: Response): Promise<any> => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, author, categories, description, isbn, publicationYear } =
-      req.body;
+    const {
+      title,
+      author,
+      categories,
+      description,
+      isbn,
+      publicationYear,
+      image,
+      url,
+    } = req.body;
 
     try {
       // Check if the author exists
@@ -60,6 +108,8 @@ router.post(
         description,
         isbn,
         publicationYear,
+        image,
+        url,
       });
       await book.save();
 
